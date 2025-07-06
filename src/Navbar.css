@@ -1,0 +1,23 @@
+.welcome {
+    font-family: "Great Vibes", cursive;
+    font-size: 30px !important;
+}
+
+
+
+.user-name {
+    max-width: 150px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.dropdown-menu-end {
+    right: 0;
+    left: auto;
+}
+
+/* Optional: Style the dropdown items */
+.dropdown-item:hover {
+    background-color: #f8f9fa;
+}
