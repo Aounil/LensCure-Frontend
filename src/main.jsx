@@ -6,13 +6,16 @@ import { BrowserRouter } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext.jsx'
 import Navbar from './Navbar.jsx';
 import AppRouter from './AppRouter.jsx';
+import { CartProvider } from './context/CartContext.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthProvider> 
-        <Navbar />
-        <AppRouter />
+      <AuthProvider>
+        <CartProvider>
+          <Navbar />
+          <AppRouter />
+        </CartProvider>
       </AuthProvider>
     </BrowserRouter>
   </StrictMode>
