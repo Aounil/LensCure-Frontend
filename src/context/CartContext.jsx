@@ -24,21 +24,30 @@ export const CartProvider = ({ children }) => {
                 return [...prev, { id, name, price, image_path, quantity: 1 }];
             }
         });
-    };  
+    };
 
 
     const removeFromCart = (id) => {
         setCartItems((prev) =>
-            prev.map((item) =>item.id === id ? { ...item, quantity: item.quantity - 1 }: item)
-        .filter((item) => item.quantity > 0)
+            prev.map((item) => item.id === id ? { ...item, quantity: item.quantity - 1 } : item)
+                .filter((item) => item.quantity > 0)
+        );
+    };
+
+    const updateCartItemQuantity = (id, newQuantity) => {
+        setCartItems((prev) =>
+            prev.map((item) =>
+                item.id === id ? { ...item, quantity: newQuantity } : item
+            )
         );
     };
 
 
 
 
+
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart }}>
+        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateCartItemQuantity }}>
             {children}
         </CartContext.Provider>
     );

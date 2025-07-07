@@ -7,6 +7,7 @@ import { AuthProvider } from './context/AuthContext.jsx'
 import Navbar from './Navbar.jsx';
 import AppRouter from './AppRouter.jsx';
 import { CartProvider } from './context/CartContext.jsx';
+import Footer from './Footer.jsx'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -15,6 +16,7 @@ createRoot(document.getElementById('root')).render(
         <CartProvider>
           <Navbar />
           <AppRouter />
+          <Footer/>
         </CartProvider>
       </AuthProvider>
     </BrowserRouter>

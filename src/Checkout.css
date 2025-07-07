@@ -1,0 +1,76 @@
+
+.container.checkout-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.Ctitle {
+  text-align: center;
+  font-weight: 700;
+  color: #000000;
+}
+
+.cart-item-card {
+  background: rgb(255, 255, 255);
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cart-item-card img.checkimg {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: 6px;
+}
+
+.quantity-control {
+  max-width: 130px;
+}
+
+.quantity-control input[type="number"] {
+  width: 50px;
+  height: 33px;
+  padding: 6px;
+  font-size: 16px;
+  border-radius: 10px;
+}
+
+.quantity-control button {
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  line-height: 1;
+}
+
+.summary-card {
+  background: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 0 8px rgba(0,0,0,0.1);
+}
+
+.summary-card h4 {
+  margin: 0;
+  font-weight: 600;
+  font-size: 1.5rem;
+}
+
+
+
+/* Responsive */
+@media (max-width: 576px) {
+  .cart-item-card {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+  }
+  
+  .quantity-control {
+    max-width: 100%;
+  }
+}

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import './Client.css';
 import { fetchWithAuth } from './fetchWithAuth';
 import {useCart} from './context/CartContext'
+import ScrollingText from './ScrollingText';
 
 export default function Client() {
   const [products, setProducts] = useState([]);
@@ -35,6 +36,8 @@ export default function Client() {
 
   return (
     <div>
+      <ScrollingText/>
+
       {/* Search and filter */}
       <div className="container my-5">
         <div className="row justify-content-center">
@@ -54,7 +57,7 @@ export default function Client() {
               >
                 <option value="ALL">All Statuses</option>
                 <option value="AVAILABLE">Available</option>
-                <option value="OUT_OF_STOCK">Out of Stock</option>
+                <option value="OUT OF STOCK">Out of Stock</option>
               </select>
             </div>
           </div>
@@ -79,7 +82,7 @@ export default function Client() {
                   <div className="info">
                     <h2 className="title">{product.name}</h2>
                     <p className="desc">{product.description}</p>
-                    {/* <p className="reference">Ref: {product.reference}</p> */}
+                    <p className="reference">Ref: {product.reference}</p>
 
                     <div className="bottom">
                       <div className="price">
