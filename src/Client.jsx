@@ -1,17 +1,37 @@
 import React, { useEffect, useState } from 'react';
 import './Client.css';
 import { fetchWithAuth } from './fetchWithAuth';
-import {useCart} from './context/CartContext'
+import { useCart } from './context/CartContext'
 import ScrollingText from './ScrollingText';
+import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
+
+
 
 export default function Client() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState('');
   const [status, setStatus] = useState('ALL');
-  const {addToCart} = useCart()
+  const { addToCart } = useCart()
 
   const handleAddToCart = (product) => {
     addToCart(product)
+
+    const Toast = Swal.mixin({
+      toast: true,
+      position: "top-end",
+      showConfirmButton: false,
+      timer: 1500,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.onmouseenter = Swal.stopTimer;
+        toast.onmouseleave = Swal.resumeTimer;
+      }
+    });
+    Toast.fire({
+      icon: "success",
+      title: `"${product.name}" added to cart!`
+    });
   }
 
   const getProducts = async () => {
@@ -36,7 +56,7 @@ export default function Client() {
 
   return (
     <div>
-      <ScrollingText/>
+      <ScrollingText />
 
       {/* Search and filter */}
       <div className="container my-5">
@@ -80,7 +100,9 @@ export default function Client() {
                   </div>
 
                   <div className="info">
-                    <h2 className="title">{product.name}</h2>
+                    <Link to='/product' state={{ product }}>
+                      <h2 className='title'>{product.name}</h2>
+                    </Link>
                     <p className="desc">{product.description}</p>
                     <p className="reference">Ref: {product.reference}</p>
 
@@ -88,8 +110,8 @@ export default function Client() {
                       <div className="price">
                         <span className="new">${product.price}</span>
                       </div>
-                      <button 
-                        className="btn btn-dark" 
+                      <button
+                        className="btn btn-dark"
                         onClick={() => handleAddToCart(product)}
                         disabled={product.status !== 'AVAILABLE'}
                       >
@@ -102,7 +124,7 @@ export default function Client() {
                           fill="none"
                           stroke="currentColor"
                           strokeWidth="2"
-                          style={{marginLeft : '10px'}}
+                          style={{ marginLeft: '10px' }}
                         >
                           <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4" />
                           <line x1="3" y1="6" x2="21" y2="6" />

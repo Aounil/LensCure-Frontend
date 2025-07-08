@@ -24,9 +24,7 @@ export default function Navbar() {
         navigate("/");
     };
 
-    const handleViewProfile = () => {
-        // Add your profile navigation logic here
-    };
+
 
     const handleCheckOut = () => {
         navigate("/checkout");
@@ -35,7 +33,7 @@ export default function Navbar() {
     // Show a simple navbar if not authenticated
     if (!isAuthenticated) {
         return (
-            <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ position: 'sticky', top: 0, zIndex: 1030 }}>
+            <nav className="navbar shadow navbar-expand-lg navbar-light bg-light" style={{ position: 'sticky', top: 0, zIndex: 1030 }}>
                 <div className="container-fluid">
                     <a className="navbar-brand" href="#"><img src={NVlogo} alt="Logo" style={{ width: "40px", height: "auto", objectFit: "contain" }} /></a>
                     <div className="navbar-nav mx-auto">
@@ -48,7 +46,7 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="navbar navbar-expand-lg navbar-light bg-light" style={{ position: 'sticky', top: 0, zIndex: 1030 }}>
+            <nav className="navbar shadow navbar-expand-lg navbar-light bg-light" style={{ position: 'sticky', top: 0, zIndex: 1030 }}>
                 <div className="container-fluid">
                     <a className="navbar-brand" href="#"><img src={NVlogo} alt="Logo" style={{ width: "40px", height: "auto", objectFit: "contain" }} /></a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,8 +65,6 @@ export default function Navbar() {
                                     <span className="user-name">{user?.name}</span>
                                 </a>
                                 <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                                    <li><a className="dropdown-item" href="#" onClick={handleViewProfile}>View Profile</a></li>
-                                    <li><hr className="dropdown-divider" /></li>
                                     <li><a className="dropdown-item" href="#" onClick={handleLogout}>Log Out</a></li>
                                 </ul>
                             </li>
@@ -126,10 +122,6 @@ export default function Navbar() {
                                     </li>
                                 </>
                             )}
-
-
-
-
                         </ul>
                     </div>
                 </div>

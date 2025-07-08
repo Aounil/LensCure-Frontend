@@ -3,17 +3,19 @@ import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js"
 import logo from './assets/LensCure.png'
 import { useNavigate } from 'react-router-dom';
-import { jwtDecode } from 'jwt-decode';        
+import { jwtDecode } from 'jwt-decode';
 import { roleRouteMap } from './roleRouteMap'
-import {useAuth} from './context/AuthContext.jsx'
+import { useAuth } from './context/AuthContext.jsx'
+import Swal from 'sweetalert2';
+
 
 function App() {
 
-  const {login} = useAuth()
+  const { login } = useAuth()
   const navigate = useNavigate();
 
   const RBAC = (token) => {
-    const decoded = jwtDecode(token);          
+    const decoded = jwtDecode(token);
     const route = roleRouteMap[decoded.role] || "/not-authorized";
     navigate(route);
   };
@@ -38,8 +40,15 @@ function App() {
       });
 
       const data = await response.json();
-    
+
       if (response.ok && data.token) {
+        Swal.fire({
+          position: "center",
+          icon: "success",
+          title: "Logged in !",
+          showConfirmButton: false,
+          timer: 1500
+        });
         login(data.token)
         localStorage.setItem('token', data.token);
         RBAC(data.token);
@@ -51,7 +60,7 @@ function App() {
 
   return (
     <>
-      <section className="" style={{ backgroundColor: "#f5f7fa" }}>
+      <section className="" style={{ backgroundColor: "#FFFF" }}>
         <div className="container py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col col-xl-10">

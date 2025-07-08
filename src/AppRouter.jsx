@@ -6,6 +6,7 @@ import AdminPanel from "./AdminPanel";
 import StockManager from "./StockManager";
 import NotAuthorized from "./NotAuthorized";
 import CheckOut from "./CheckOut";
+import Product from "./Product";
 
 export default function AppRouter() {
   return (
@@ -16,6 +17,7 @@ export default function AppRouter() {
       <Route path="/admin-panel" element={<AdminPanel />} />
       <Route path="/stock-manager" element={<StockManager />} />
       <Route path="/not-authorized" element={<NotAuthorized />} />
+      <Route path="/product" element={<Product/>}/>
     </Routes>
   );
 }
