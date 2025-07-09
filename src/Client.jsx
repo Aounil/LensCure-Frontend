@@ -50,8 +50,7 @@ export default function Client() {
 
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase());
-    const matchesStatus = status === 'ALL' || product.status === status;
-    return matchesSearch && matchesStatus;
+    return matchesSearch;
   });
 
   return (
@@ -74,15 +73,6 @@ export default function Client() {
                 value={search}
                 onChange={e => setSearch(e.target.value)}
               />
-              <select
-                className="form-select status-select"
-                value={status}
-                onChange={e => setStatus(e.target.value)}
-              >
-                <option value="ALL">All Statuses</option>
-                <option value="AVAILABLE">Available</option>
-                <option value="OUT OF STOCK">Out of Stock</option>
-              </select>
             </div>
           </div>
         </div>
@@ -93,8 +83,9 @@ export default function Client() {
         {filteredProducts.length === 0 ? (
           <p className="text-center">No products found.</p>
         ) : (
+          
           <div className="row g-4 justify-content-center">
-            {filteredProducts.map(product => (
+            {filteredProducts.filter((products)=> products.status === 'AVAILABLE').map(product => (
               <div className="col-md-6 col-lg-4" key={product.id}>
                 <div className="card custom-card">
                   <div className="tilt">
@@ -138,10 +129,6 @@ export default function Client() {
                     </div>
 
                     <div className="meta">
-                      <div className="quantity">
-                        <span className="qty-label">Quantity: </span>
-                        <span className="qty-value">{product.quantity}</span>
-                      </div>
                       <div className={`stock ${product.status === 'AVAILABLE' ? 'in-stock' : 'out-stock'}`}>
                         {product.status === 'AVAILABLE' ? 'In Stock' : 'Out of Stock'}
                       </div>

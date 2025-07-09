@@ -16,6 +16,7 @@ function App() {
 
   const RBAC = (token) => {
     const decoded = jwtDecode(token);
+    //TO DO implement the 404 page
     const route = roleRouteMap[decoded.role] || "/not-authorized";
     navigate(route);
   };
