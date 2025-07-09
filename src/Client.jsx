@@ -5,7 +5,7 @@ import { useCart } from './context/CartContext'
 import ScrollingText from './ScrollingText';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
-
+import banner from './assets/banner.png'
 
 
 export default function Client() {
@@ -58,7 +58,11 @@ export default function Client() {
     <div>
       <ScrollingText />
 
-      {/* Search and filter */}
+      <div className="container my-5">
+        <img src={banner} className='img-fluid' alt="" />
+      </div>
+
+      {/*Search*/}
       <div className="container my-5">
         <div className="row justify-content-center">
           <div className="col-md-6">

@@ -120,6 +120,9 @@ export default function Navbar() {
                                     <li className="nav-item">
                                         <Link className="nav-link" to="/admin-panel">User Management</Link>
                                     </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link" to="/user-creation">User Creation</Link>
+                                    </li>
                                 </>
                             )}
                         </ul>
