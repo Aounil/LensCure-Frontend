@@ -4,17 +4,21 @@ import './Checkout.css';
 import { fetchWithAuth } from './fetchWithAuth';
 import { toast, Bounce } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 
 export default function CheckOut() {
     const { cartItems, addToCart, removeFromCart, updateCartItemQuantity ,clearCart } = useCart();
     const { user  } = useAuth();
     const navigate = useNavigate()
+    const [loading , setLoading] = useState(false)
     const total = cartItems.reduce(
         (sum, item) => sum + item.price * item.quantity,
         0
     );
 
     const handleOrder = async () => {
+
+        setLoading(true)
 
         const itemdata = {
             userEmail: user.sub,
@@ -52,9 +56,10 @@ export default function CheckOut() {
                 },
                 icon: '✨'
             });
+            setLoading(false)
             clearCart()
             navigate('/client')
-
+            
 
            
         } else {
@@ -114,7 +119,8 @@ return (
 
                 <div className="summary-card bg-light p-4 mt-4 rounded text-end">
                     <h4>Total: <strong>{total.toFixed(2)}$</strong></h4>
-                    <button className='btn btn-primary btn-lg mt-3' onClick={()=>handleOrder()}>Place Order</button>
+                    <button type="submit" className="btn btn-success mt-5 " onClick={()=>handleOrder()}  >  {loading?"Processing.....":"Place Order"}{loading && <div className="spinner-border spinner-border-sm ms-2" role="status" />}
+                </button>
                 </div>
             </>
         )}

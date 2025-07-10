@@ -7,7 +7,7 @@ import { jwtDecode } from 'jwt-decode';
 import { roleRouteMap } from './roleRouteMap'
 import { useAuth } from './context/AuthContext.jsx'
 import Swal from 'sweetalert2';
-
+import Silk from './Silk'; 
 
 function App() {
 
@@ -16,7 +16,6 @@ function App() {
 
   const RBAC = (token) => {
     const decoded = jwtDecode(token);
-    //TO DO implement the 404 page
     const route = roleRouteMap[decoded.role] || "/not-authorized";
     navigate(route);
   };
@@ -61,7 +60,19 @@ function App() {
 
   return (
     <>
-      <section className="" style={{ backgroundColor: "#FFFF" }}>
+      {/* ✅ Silk background, fixed and behind everything */}
+      <div style={{
+        position: "fixed",
+        top: 0, left: 0,
+        width: "100%",
+        height: "100%",
+        zIndex: -1
+      }}>
+        <Silk speed={5} scale={1} color="#7B7481" noiseIntensity={1.5} rotation={0} />
+      </div>
+
+      {/* ✅ Your login content stays above */}
+      <section className="" style={{ backgroundColor: "transparent" }}>
         <div className="container py-5 h-100">
           <div className="row d-flex justify-content-center align-items-center h-100">
             <div className="col col-xl-10">
@@ -79,7 +90,7 @@ function App() {
                     <div className="card-body p-4 p-lg-5 text-black">
                       <form onSubmit={handlsubmit}>
                         <div className="d-flex align-items-center mb-3 pb-1">
-                          <span className="">
+                          <span>
                             <img
                               src={logo}
                               alt="Logo"

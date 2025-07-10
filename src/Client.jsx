@@ -6,6 +6,8 @@ import ScrollingText from './ScrollingText';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import banner from './assets/banner.png'
+import Silk from './Silk';
+
 
 
 export default function Client() {
@@ -54,12 +56,34 @@ export default function Client() {
   });
 
   return (
+
     <div>
+
+      <div
+        style={{
+          position: 'fixed',
+          top: 0, left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: -1,
+        }}
+      >
+        <Silk
+          speed={5}
+          scale={1}
+          color="#7B7481"
+          noiseIntensity={1.5}
+          rotation={0}
+        />
+      </div>
       <ScrollingText />
 
-      <div className="container my-5">
-        <img src={banner} className='img-fluid' alt="" />
+      <div className="container">
+        <div className="banner-container position-relative my-5">
+          <img src={banner} alt="Banner" className="banner-img img-fluid" />
+        </div>
       </div>
+
 
       {/*Search*/}
       <div className="container my-5">
@@ -83,9 +107,9 @@ export default function Client() {
         {filteredProducts.length === 0 ? (
           <p className="text-center">No products found.</p>
         ) : (
-          
+
           <div className="row g-4 justify-content-center">
-            {filteredProducts.filter((products)=> products.status === 'AVAILABLE').map(product => (
+            {filteredProducts.filter((products) => products.status === 'AVAILABLE').map(product => (
               <div className="col-md-6 col-lg-4" key={product.id}>
                 <div className="card custom-card">
                   <div className="tilt">
