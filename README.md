@@ -20,7 +20,7 @@ A **responsive React dashboard** for LensCure, featuring:
 | **API Calls**         | `fetch` with JWT        |  
 
 ## ⚡ Tech Stack  
-- **Frontend**: React 18, Vite (if used)  
+- **Frontend**: React 18, Vite 
 - **Routing**: React Router v6  
 - **Styling**: Bootstrap/CSS Modules  
 - **State**: Context API (Auth + Cart)  
@@ -36,7 +36,7 @@ npm run dev  # http://localhost:3000
 ## 🔌 API Integration
 
 ### Configuration
-- **Base URL**: `http://localhost:8080` (replace with production URL when deploying)
+- **Base URL**: `http://localhost:8080` 
 - **Authentication**: JWT stored in browser's `localStorage`
 - **Required Headers**: 
   ```json
