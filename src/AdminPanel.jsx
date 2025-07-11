@@ -8,7 +8,7 @@ export default function AdminPanel() {
 
   const getUsers = async () => {
     try {
-      const response = await fetchWithAuth('http://localhost:8080/admin/Users', { method: 'GET' }); 
+      const response = await fetchWithAuth('http://localhost:8080/admin/Users', { method: 'GET' });
       const data = await response.json();
       if (response.ok) {
         setUsers(data);
@@ -43,7 +43,7 @@ export default function AdminPanel() {
           theme: 'dark',
           transition: Bounce,
         });
-        getUsers(); // refresh the list after update
+        getUsers();
       } else {
         toast.error('Failed to update role');
       }
@@ -52,6 +52,54 @@ export default function AdminPanel() {
       toast.error('Error updating role');
     }
   };
+
+  const handleDelet = (id) => {
+  const toastId =   toast.info(
+      <div>
+        <p>Are you sure?</p>
+        <button onClick={()=>handleYes(id , toastId)} style={{ marginRight: '8px' }}>Yes</button>
+        <button onClick={()=>handleNo(toastId)}>No</button>
+      </div>,
+      {
+        autoClose: false,
+        closeOnClick: false
+      }
+    );
+  }
+
+
+  const handleYes = async (id , Toastid) => {
+    try {
+      const response = await fetchWithAuth(`http://localhost:8080/admin/delete/${id}`, { method: 'DELETE' })
+      if (response.ok) {
+        toast.success('User Deleted', {
+          position: 'top-center',
+          autoClose: 3000,
+          hideProgressBar: false,
+          closeOnClick: false,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: 'dark',
+          transition: Bounce,
+        })
+        toast.dismiss(Toastid)
+        getUsers()
+      }
+
+      else {
+        toast.error('Failed to update role');
+      }
+    } catch (error) {
+      console.error('Error Deleting  user:', error);
+      toast.error('Error Deleting  user:');
+    }
+  }
+
+  const handleNo =(id) =>{
+    toast.dismiss(id)
+  }
+
 
   useEffect(() => {
     getUsers();
@@ -68,6 +116,7 @@ export default function AdminPanel() {
             <th>Email</th>
             <th>Role</th>
             <th>Update Role</th>
+            <th>Delete User</th>
           </tr>
         </thead>
         <tbody>
@@ -95,6 +144,7 @@ export default function AdminPanel() {
                     <option value="GESTIONNAIRE_ACHAT">GESTIONNAIRE_ACHAT</option>
                   </select>
                 </td>
+                <td><button className='btn btn-danger w-100' onClick={() => handleDelet(user.id)}>X</button></td>
               </tr>
             ))
           )}
