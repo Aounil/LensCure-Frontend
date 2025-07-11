@@ -1,13 +1,21 @@
-import { Children, createContext, useContext, useState } from "react";
-
+import { createContext, useContext, useEffect, useState } from "react";
 
 const CartContext = createContext();
 
-
-
 export const CartProvider = ({ children }) => {
 
-    const [cartItems, setCartItems] = useState([])
+
+    // this is called lazy initializer
+    const [cartItems, setCartItems] = useState(() => {
+        const stored = localStorage.getItem('cartItems');
+        return stored ? JSON.parse(stored) : [];
+    });
+    
+
+    // runs after each change in cartItems
+    useEffect(() => {
+        localStorage.setItem('cartItems', JSON.stringify(cartItems));
+    }, [cartItems]);
 
     const addToCart = (product) => {
         setCartItems((prev) => {
@@ -19,18 +27,18 @@ export const CartProvider = ({ children }) => {
                         : item
                 );
             } else {
-                // Force cart quantity to 1, regardless of actual stock
                 const { id, name, price, image_path } = product;
                 return [...prev, { id, name, price, image_path, quantity: 1 }];
             }
         });
     };
 
-
     const removeFromCart = (id) => {
         setCartItems((prev) =>
-            prev.map((item) => item.id === id ? { ...item, quantity: item.quantity - 1 } : item)
-                .filter((item) => item.quantity > 0)
+            prev.map((item) => item.id === id
+                ? { ...item, quantity: item.quantity - 1 }
+                : item
+            ).filter((item) => item.quantity > 0)
         );
     };
 
@@ -42,22 +50,17 @@ export const CartProvider = ({ children }) => {
         );
     };
 
-    const clearCart = () =>{
-        setCartItems([])
-    }
-
-
-
-
+    const clearCart = () => {
+        setCartItems([]);
+    };
 
     return (
-        <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, updateCartItemQuantity ,clearCart }}>
+        <CartContext.Provider value={{ cartItems, setCartItems, addToCart, removeFromCart, updateCartItemQuantity, clearCart }}>
             {children}
         </CartContext.Provider>
     );
-}
-// you use this useCart in componant to be able to use the function inside here
+};
+
 export function useCart() {
     return useContext(CartContext);
 }
-
