@@ -35,12 +35,12 @@ npm run dev  # http://localhost:3000
 ```
 ## 🔌 API Integration
 
-Base URL: http://localhost:8080 (update for production)
-
-Auth: JWT stored in localStorage
-
-Example Request:
-
-await fetch("/api/orders", {
-  headers: { "Authorization": `Bearer ${token}` }
-});
+### Configuration
+- **Base URL**: `http://localhost:8080` (replace with production URL when deploying)
+- **Authentication**: JWT stored in browser's `localStorage`
+- **Required Headers**: 
+  ```json
+  {
+    "Content-Type": "application/json",
+    "Authorization": "Bearer your.jwt.token"
+  }
