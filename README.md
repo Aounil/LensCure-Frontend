@@ -33,8 +33,8 @@ cd LensCure-Frontend
 npm install
 npm run dev  # http://localhost:3000
 ```
+## 🔌 API Integration
 
-##🔌 API Integration
 Base URL: http://localhost:8080 (update for production)
 
 Auth: JWT stored in localStorage
