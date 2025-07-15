@@ -7,11 +7,3 @@ export async function fetchWithAuth(url, options = {}) {
   };
   return fetch(url, { ...options, headers });
 }
-
-
-
-// import { fetchWithAuth } from './fetchWithAuth';
-
-// const response = await fetchWithAuth('http://localhost:8080/api/v1/some-endpoint', {
-//   method: 'GET',
-// });

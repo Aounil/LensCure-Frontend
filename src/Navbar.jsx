@@ -10,10 +10,11 @@ import { Link } from 'react-router-dom';
 
 
 export default function Navbar() {
-    const { user, logout, isAuthenticated } = useAuth();
+    
     const navigate = useNavigate();
     const { cartItems, removeFromCart } = useCart();
     const [isCartVisible, setCartVisible] = useState(false);
+    const { user, logout, isAuthenticated } = useAuth();
 
     const toggleCart = () => {
         setCartVisible(prev => !prev);
@@ -65,7 +66,9 @@ export default function Navbar() {
                                     <span className="user-name">{user?.name}</span>
                                 </a>
                                 <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
-                                    <li><a className="dropdown-item" href="#" onClick={handleLogout}>Log Out</a></li>
+                                    <li><a className="dropdown-item" onClick={handleLogout}>Log Out</a></li>
+                                    <hr />
+                                    <li><Link className="dropdown-item" to="/orders">My Orders</Link></li>
                                 </ul>
                             </li>
 

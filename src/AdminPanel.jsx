@@ -57,8 +57,8 @@ export default function AdminPanel() {
   const toastId =   toast.info(
       <div>
         <p>Are you sure?</p>
-        <button onClick={()=>handleYes(id , toastId)} style={{ marginRight: '8px' }}>Yes</button>
-        <button onClick={()=>handleNo(toastId)}>No</button>
+        <button className='btn btn-success' onClick={()=>handleYes(id , toastId)} style={{ marginRight: '8px' }}>Yes</button>
+        <button className='btn btn-danger' onClick={()=>handleNo(toastId)}>No</button>
       </div>,
       {
         autoClose: false,

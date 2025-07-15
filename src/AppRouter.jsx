@@ -8,6 +8,7 @@ import NotAuthorized from "./NotAuthorized";
 import CheckOut from "./CheckOut";
 import Product from "./Product";
 import UserCreation from "./UserCreation";
+import Orders from "./Orders";
 
 export default function AppRouter() {
   return (
@@ -20,6 +21,7 @@ export default function AppRouter() {
       <Route path="/not-authorized" element={<NotAuthorized />} />
       <Route path="/product" element={<Product/>}/>
       <Route path="/user-creation" element={<UserCreation/>}/>
+      <Route path="/orders" element={<Orders/>}/>
     </Routes>
   );
 }
