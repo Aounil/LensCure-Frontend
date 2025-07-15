@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useAuth } from './context/AuthContext'
 import { fetchWithAuth } from './fetchWithAuth'
 import { motion } from 'framer-motion' 
+import Silk from './Silk';
 import './Orders.css'
 
 export default function Orders() {
@@ -30,6 +31,23 @@ export default function Orders() {
 
   return (
     <div className="container my-5">
+       <div
+        style={{
+          position: 'fixed',
+          top: 0, left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: -1,
+        }}
+      >
+        <Silk
+          speed={5}
+          scale={1}
+          color="#7B7481"
+          noiseIntensity={1.5}
+          rotation={0}
+        />
+      </div>
       <h2 className="mb-4">Your Orders, {user?.name}:</h2>
 
       <div className="row gy-4">

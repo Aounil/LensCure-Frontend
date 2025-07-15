@@ -4,6 +4,7 @@ import './Checkout.css';
 import { fetchWithAuth } from './fetchWithAuth';
 import { toast, Bounce } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
+import Silk from './Silk';
 import { useState } from 'react';
 
 export default function CheckOut() {
@@ -77,6 +78,23 @@ export default function CheckOut() {
 
 return (
     <div className="container checkout-wrapper">
+         <div
+        style={{
+          position: 'fixed',
+          top: 0, left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: -1,
+        }}
+      >
+        <Silk
+          speed={5}
+          scale={1}
+          color="#7B7481"
+          noiseIntensity={1.5}
+          rotation={0}
+        />
+      </div>
         <h1 className='my-5 Ctitle'>Shopping Cart 🛒</h1>
 
         {cartItems.length === 0 ? (

@@ -102,7 +102,7 @@ export default function StockManager() {
                   value={product.status}
                   onChange={(e) => handleChange(index, 'status', e.target.value)}
                 >
-                  <option value="Available">Available</option>
+                  <option value="AVAILABLE">Available</option>
                   <option value="OUT OF STOCK">Out of Stock</option>
                 </select>
               </td>

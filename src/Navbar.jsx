@@ -7,10 +7,11 @@ import { useAuth } from './context/AuthContext.jsx';
 import { useCart } from './context/CartContext.jsx';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { ul } from 'framer-motion/m';
 
 
 export default function Navbar() {
-    
+
     const navigate = useNavigate();
     const { cartItems, removeFromCart } = useCart();
     const [isCartVisible, setCartVisible] = useState(false);
@@ -56,10 +57,13 @@ export default function Navbar() {
                     <div className="collapse navbar-collapse" id="navbarNavDropdown">
                         <ul className="navbar-nav mx-auto">
                             <li className="nav-item">
-                                <a className="nav-link active welcome" aria-current="page" href="#">Welcome to LensCure</a>
+                                <a className=" active welcome" aria-current="page" href="#">Welcome to LensCure</a>
                             </li>
+
+
                         </ul>
                         <ul className="navbar-nav">
+
                             <li className="nav-item dropdown">
                                 <a className="nav-link dropdown-toggle d-flex align-items-center" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     <img src={userIcon} alt="" className="me-2" style={{ width: '20px', height: '20px' }} />
@@ -67,52 +71,61 @@ export default function Navbar() {
                                 </a>
                                 <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdownMenuLink">
                                     <li><a className="dropdown-item" onClick={handleLogout}>Log Out</a></li>
-                                    <hr />
-                                    <li><Link className="dropdown-item" to="/orders">My Orders</Link></li>
                                 </ul>
                             </li>
 
                             {/* Only show cart for CLIENT users */}
                             {user?.role === "CLIENT" && (
-                                <li className="nav-item cart-container">
-                                    <span className="cart-icon-wrapper" onClick={toggleCart}>
-                                        <span className="material-symbols-outlined cart-icon">shopping_cart</span>
-                                        <span className="cart-badge">
-                                            {cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                                <ul className='navbar-nav'>
+
+                                    <li className='nav-item'>
+                                        <Link className="nav-link" to="/orders">My Orders</Link>
+                                    </li>
+
+                                    <li className='nav-item'>
+                                        <Link className="nav-link" to="/Client">Products</Link>
+                                    </li>
+
+                                    <li className="nav-item cart-container">
+                                        <span className="cart-icon-wrapper" onClick={toggleCart}>
+                                            <span className="material-symbols-outlined cart-icon">shopping_cart</span>
+                                            <span className="cart-badge">
+                                                {cartItems.reduce((sum, item) => sum + item.quantity, 0)}
+                                            </span>
                                         </span>
-                                    </span>
 
-                                    {isCartVisible && (
-                                        <div className="custom-cart-dropdown">
-                                            <div className="cart-header">
-                                                <span className="material-symbols-outlined cart-icon">shopping_cart</span>
-                                                <span className="cart-badge">{cartItems.length}</span>
-                                                <div className="cart-total">
-                                                    <span className="text-muted">Total:</span>
-                                                    <span className="total-price">
-                                                        ${cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)}
-                                                    </span>
-                                                </div>
-                                            </div>
-
-                                            <ul className="cart-items-list">
-                                                {cartItems.map((item, index) => (
-                                                    <li className="cart-item" key={index}>
-                                                        <img src={item.image_path} alt={item.name} />
-                                                        <span className="item-name">{item.name}</span>
-                                                        <span className="item-price">${item.price.toFixed(2)}</span>
-                                                        <span className="item-quantity">
-                                                            Qty: {item.quantity} {item.stock && `/ ${item.stock}`}
+                                        {isCartVisible && (
+                                            <div className="custom-cart-dropdown">
+                                                <div className="cart-header">
+                                                    <span className="material-symbols-outlined cart-icon">shopping_cart</span>
+                                                    <span className="cart-badge">{cartItems.length}</span>
+                                                    <div className="cart-total">
+                                                        <span className="text-muted">Total:</span>
+                                                        <span className="total-price">
+                                                            ${cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0).toFixed(2)}
                                                         </span>
-                                                        <button className='btn btn-danger mx-1' onClick={() => removeFromCart(item.id)}>-</button>
-                                                    </li>
-                                                ))}
-                                            </ul>
+                                                    </div>
+                                                </div>
 
-                                            <button className="checkout-btn" onClick={handleCheckOut}>Checkout</button>
-                                        </div>
-                                    )}
-                                </li>
+                                                <ul className="cart-items-list">
+                                                    {cartItems.map((item, index) => (
+                                                        <li className="cart-item" key={index}>
+                                                            <img src={item.image_path} alt={item.name} />
+                                                            <span className="item-name">{item.name}</span>
+                                                            <span className="item-price">${item.price.toFixed(2)}</span>
+                                                            <span className="item-quantity">
+                                                                Qty: {item.quantity} {item.stock && `/ ${item.stock}`}
+                                                            </span>
+                                                            <button className='btn btn-danger mx-1' onClick={() => removeFromCart(item.id)}>-</button>
+                                                        </li>
+                                                    ))}
+                                                </ul>
+
+                                                <button className="checkout-btn" onClick={handleCheckOut}>Checkout</button>
+                                            </div>
+                                        )}
+                                    </li>
+                                </ul>
                             )}
 
                             {user?.role === "ADMIN" && (
