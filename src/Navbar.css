@@ -1,25 +1,25 @@
 .welcome {
-    font-family: "Great Vibes", cursive;
-    font-size: 30px !important;
+  font-family: "Great Vibes", cursive;
+  font-size: 30px !important;
 }
 
 
 
 .user-name {
-    max-width: 150px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  max-width: 150px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dropdown-menu-end {
-    right: 0;
-    left: auto;
+  right: 0;
+  left: auto;
 }
 
 /* Optional: Style the dropdown items */
 .dropdown-item:hover {
-    background-color: #f8f9fa;
+  background-color: #f8f9fa;
 }
 
 .cart-container {
@@ -124,10 +124,22 @@
   border-radius: 4px;
   font-weight: bold;
   cursor: pointer;
-transition: background-color 0.3s ease;
+  transition: background-color 0.3s ease;
 }
 
 .checkout-btn:hover {
   background-color: #000000;
   color: white;
+}
+
+.navig_link {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  color: black;
+  transition: all 0.3s ease; 
+}
+
+.navig_link:hover {
+  transform: scale(1.05); 
+  color: #7e7e7e;
 }

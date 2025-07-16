@@ -79,11 +79,11 @@ export default function Navbar() {
                                 <ul className='navbar-nav'>
 
                                     <li className='nav-item'>
-                                        <Link className="nav-link" to="/orders">My Orders</Link>
+                                        <Link className="nav-link navig_link" to="/orders">My Orders</Link>
                                     </li>
 
                                     <li className='nav-item'>
-                                        <Link className="nav-link" to="/Client">Products</Link>
+                                        <Link className="nav-link navig_link" to="/Client">Products</Link>
                                     </li>
 
                                     <li className="nav-item cart-container">
@@ -131,13 +131,13 @@ export default function Navbar() {
                             {user?.role === "ADMIN" && (
                                 <>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="/stock-manager">Stock Management</Link>
+                                        <Link className="nav-link navig_link" to="/stock-manager">Stock Management</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="/admin-panel">User Management</Link>
+                                        <Link className="nav-link navig_link" to="/admin-panel">User Management</Link>
                                     </li>
                                     <li className="nav-item">
-                                        <Link className="nav-link" to="/user-creation">User Creation</Link>
+                                        <Link className="nav-link navig_link" to="/user-creation">User Creation</Link>
                                     </li>
                                 </>
                             )}
