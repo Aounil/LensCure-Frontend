@@ -48,7 +48,7 @@ export default function Navbar() {
 
     return (
         <>
-            <nav className="navbar shadow navbar-expand-lg navbar-light bg-light" style={{ position: 'sticky', top: 0, zIndex: 1030 }}>
+            <nav className="navbar shadow navbar-expand-lg navbar-light" style={{ position: 'sticky', top: 0, zIndex: 1030 }}>
                 <div className="container-fluid">
                     <a className="navbar-brand" href="#"><img src={NVlogo} alt="Logo" style={{ width: "40px", height: "auto", objectFit: "contain" }} /></a>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">

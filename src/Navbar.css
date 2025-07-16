@@ -132,14 +132,34 @@
   color: white;
 }
 
-.navig_link {
+.navig_link,
+.user-name {
   font-family: "Poppins", sans-serif;
   font-weight: 500;
   color: black;
-  transition: all 0.3s ease; 
+  transition: all 0.3s ease;
 }
 
-.navig_link:hover {
-  transform: scale(1.05); 
+
+
+.navig_link:hover,
+.user-name:hover {
+  transform: scale(1.05);
   color: #7e7e7e;
+}
+
+.navbar {
+  background-color: rgba(255, 255, 255, 0.89);
+}
+
+
+/* some modification for mobile version */
+@media (max-width: 400px) {
+
+  .navig_link:hover,
+  .user-name:hover {
+    transform: scale(0.9999);
+    ;
+    color: #7e7e7e;
+  }
 }
