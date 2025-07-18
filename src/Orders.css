@@ -6,3 +6,11 @@
   border: none;
   border-radius: 1rem;
 }
+
+
+.orderCard{
+  background-color: rgba(0, 0, 0, 0.234);
+  padding: 30px;
+  border-radius: 40px;
+  font-family: 'Poppins';
+}
