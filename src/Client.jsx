@@ -1,46 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import './Client.css';
 import { fetchWithAuth } from './fetchWithAuth';
-import { useCart } from './context/CartContext'
+import { useCart } from './context/CartContext';
 import ScrollingText from './ScrollingText';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
-import banner from './assets/banner.png'
+import banner from './assets/banner.png';
 import Silk from './Silk';
-
-
 
 export default function Client() {
   const [products, setProducts] = useState([]);
   const [search, setSearch] = useState('');
-  const [status, setStatus] = useState('ALL');
-  const { addToCart } = useCart()
+  const [searchedCategory, setSearchedCategory] = useState('');
+  const { addToCart } = useCart();
+  const [categories, setCategories] = useState([]);
 
+  // Add product to cart with success toast notification
   const handleAddToCart = (product) => {
-    addToCart(product)
+    addToCart(product);
 
     const Toast = Swal.mixin({
       toast: true,
-      position: "top-end",
+      position: 'top-end',
       showConfirmButton: false,
       timer: 1500,
       timerProgressBar: true,
       didOpen: (toast) => {
         toast.onmouseenter = Swal.stopTimer;
         toast.onmouseleave = Swal.resumeTimer;
-      }
+      },
     });
     Toast.fire({
-      icon: "success",
-      title: `"${product.name}" added to cart!`
+      icon: 'success',
+      title: `"${product.name}" added to cart!`,
     });
-  }
+  };
 
+  // Fetch products and extract unique trimmed categories
   const getProducts = async () => {
     try {
       const response = await fetchWithAuth('http://localhost:8080/all', { method: 'GET' });
       const data = await response.json();
-      if (response.ok) setProducts(data);
+      if (response.ok) {
+        setProducts(data);
+
+        // Extract unique trimmed categories
+        const uniqueCategories = Array.from(new Set(data.map(p => p.category.trim())));
+        setCategories(uniqueCategories);
+      }
     } catch (error) {
       console.error('Error fetching products:', error);
     }
@@ -50,32 +57,30 @@ export default function Client() {
     getProducts();
   }, []);
 
+  // Filter products based on search, category, and availability
   const filteredProducts = products.filter(product => {
     const matchesSearch = product.name.toLowerCase().includes(search.toLowerCase());
-    return matchesSearch;
+    const matchesCategory =searchedCategory === ''? true: product.category.trim().toLowerCase() === searchedCategory.trim().toLowerCase();
+    const isAvailable = product.status === 'AVAILABLE';
+    return matchesSearch && matchesCategory && isAvailable;
   });
 
   return (
-
     <div>
-
+      {/* Background Silk effect */}
       <div
         style={{
           position: 'fixed',
-          top: 0, left: 0,
+          top: 0,
+          left: 0,
           width: '100%',
           height: '100%',
           zIndex: -1,
         }}
       >
-        <Silk
-          speed={5}
-          scale={1}
-          color="#7B7481"
-          noiseIntensity={1.5}
-          rotation={0}
-        />
+        <Silk speed={5} scale={1} color="#7B7481" noiseIntensity={1.5} rotation={0} />
       </div>
+
       <ScrollingText />
 
       <div className="container">
@@ -84,21 +89,32 @@ export default function Client() {
         </div>
       </div>
 
-
-      {/*Search*/}
+      {/* Search and Category Filter */}
       <div className="container my-5">
-        <div className="row justify-content-center">
-          <div className="col-md-6">
-            <div className="d-flex align-items-center justify-content-center gap-3">
-              <input
-                type="text"
-                className="form-control search-input"
-                placeholder="Search products..."
-                value={search}
-                onChange={e => setSearch(e.target.value)}
-              />
-            </div>
-          </div>
+        <div className="d-flex justify-content-center align-items-center gap-3 flex-wrap">
+          <input
+            type="text"
+            className="form-control search-input"
+            placeholder="Search products..."
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+            style={{ maxWidth: '400px' }}
+          />
+          <select
+            name="category"
+            className="form-control"
+            id="category"
+            value={searchedCategory}
+            onChange={(e) => setSearchedCategory(e.target.value)}
+            style={{ maxWidth: '200px' }}
+          >
+            <option value="">All Categories</option>
+            {categories.map((cat, index) => (
+              <option key={`${cat}-${index}`} value={cat}>
+                {cat}
+              </option>
+            ))}
+          </select>
         </div>
       </div>
 
@@ -107,9 +123,8 @@ export default function Client() {
         {filteredProducts.length === 0 ? (
           <p className="text-center">No products found.</p>
         ) : (
-
           <div className="row g-4 justify-content-center">
-            {filteredProducts.filter((products) => products.status === 'AVAILABLE').map(product => (
+            {filteredProducts.map((product) => (
               <div className="col-md-6 col-lg-4" key={product.id}>
                 <div className="card custom-card">
                   <div className="tilt">
@@ -119,8 +134,8 @@ export default function Client() {
                   </div>
 
                   <div className="info">
-                    <Link to='/product' state={{ product }}>
-                      <h2 className='title'>{product.name}</h2>
+                    <Link to="/product" state={{ product }}>
+                      <h2 className="title">{product.name}</h2>
                     </Link>
                     <p className="desc">{product.description}</p>
                     <p className="reference">Ref: {product.reference}</p>
@@ -153,7 +168,11 @@ export default function Client() {
                     </div>
 
                     <div className="meta">
-                      <div className={`stock ${product.status === 'AVAILABLE' ? 'in-stock' : 'out-stock'}`}>
+                      <div
+                        className={`stock ${
+                          product.status === 'AVAILABLE' ? 'in-stock' : 'out-stock'
+                        }`}
+                      >
                         {product.status === 'AVAILABLE' ? 'In Stock' : 'Out of Stock'}
                       </div>
                     </div>
