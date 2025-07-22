@@ -87,9 +87,9 @@ export default function Orders() {
       <div className="row gy-4">
         {orders.map((order, orderIndex) => (
           <div key={order.orderId} className="col-12 mb-4 orderCard">
-            
-            <h4 className="text-light">
-              Order #{order.orderId} -{' '}
+
+            <h4 className="text-light order-header">
+              <span className="order-id">Order #{order.orderId} -</span>
               <span className={getStatusClass(order.orderStatus || 'UNKNOWN')}>
                 {getStatusEmoji(order.orderStatus || 'UNKNOWN')} {order.orderStatus || 'Unknown'}
               </span>
