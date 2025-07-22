@@ -1,7 +1,7 @@
-import { useCart } from './context/CartContext';
-import { useAuth } from './context/AuthContext';
-import './Checkout.css';
-import { fetchWithAuth } from './fetchWithAuth';
+import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
+import '../styles/Checkout.css';
+import { fetchWithAuth } from '../fetchWithAuth';
 import { toast, Bounce } from 'react-toastify';
 import { useNavigate } from 'react-router-dom';
 import Silk from './Silk';

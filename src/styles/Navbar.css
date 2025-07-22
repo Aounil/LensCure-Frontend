@@ -1,6 +1,8 @@
 .welcome {
   font-family: "Great Vibes", cursive;
   font-size: 30px !important;
+  text-shadow: rgb(255, 255, 255) 1px 0px 9px;
+  /* text-shadow: 1px 1px 2px white; */
 }
 
 
@@ -149,7 +151,8 @@
 }
 
 .navbar {
-  background-color: rgba(255, 255, 255, 0.89);
+  background-color: rgba(255, 255, 255, 0.529);
+  backdrop-filter: blur(10px);
 }
 
 

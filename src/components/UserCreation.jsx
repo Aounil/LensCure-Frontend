@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { fetchWithAuth } from './fetchWithAuth';
+import { fetchWithAuth } from '../fetchWithAuth';
 import { toast, Bounce } from 'react-toastify';
 
 

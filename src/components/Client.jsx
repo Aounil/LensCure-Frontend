@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import './Client.css';
-import { fetchWithAuth } from './fetchWithAuth';
-import { useCart } from './context/CartContext';
+import '../styles/Client.css';
+import { fetchWithAuth } from '../fetchWithAuth';
+import { useCart } from '../context/CartContext';
 import ScrollingText from './ScrollingText';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
-import banner from './assets/banner.png';
+import banner from '../assets/banner.png';
 import Silk from './Silk';
 
 export default function Client() {

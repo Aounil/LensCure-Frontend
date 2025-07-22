@@ -1,13 +1,13 @@
-import './App.css'
+import '../styles/App.css'
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap/dist/js/bootstrap.js"
-import logo from './assets/LensCure.png'
+import logo from '../assets/LensCure.png'
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import { roleRouteMap } from './roleRouteMap'
-import { useAuth } from './context/AuthContext.jsx'
+import { roleRouteMap } from '../roleRouteMap.js'
+import { useAuth } from '../context/AuthContext.jsx'
 import Swal from 'sweetalert2';
-import Silk from './Silk'; 
+import Silk from './Silk.jsx'; 
 
 function App() {
 

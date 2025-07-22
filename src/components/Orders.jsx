@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useAuth } from './context/AuthContext';
-import { fetchWithAuth } from './fetchWithAuth';
+import { useAuth } from '../context/AuthContext';
+import { fetchWithAuth } from '../fetchWithAuth';
 import { motion } from 'framer-motion';
 import Silk from './Silk';
-import './Orders.css';
+import '../styles/Orders.css';
 
 export default function Orders() {
   const { user } = useAuth();

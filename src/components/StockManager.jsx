@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { fetchWithAuth } from './fetchWithAuth';
-import './Stock.css';
+import { fetchWithAuth } from '../fetchWithAuth';
+import '../styles/Stock.css';
 
 export default function StockManager() {
   const [products, setProducts] = useState([]);

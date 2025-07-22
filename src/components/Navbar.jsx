@@ -1,10 +1,10 @@
 // ... imports
-import NVlogo from './assets/NVlogo.png';
-import './Navbar.css';
-import userIcon from './assets/usericon.svg';
+import NVlogo from '../assets/NVlogo.png';
+import '../styles/Navbar.css';
+import userIcon from '../assets/usericon.svg';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from './context/AuthContext.jsx';
-import { useCart } from './context/CartContext.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
+import { useCart } from '../context/CartContext.jsx';
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ul } from 'framer-motion/m';
