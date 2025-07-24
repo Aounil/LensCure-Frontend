@@ -95,7 +95,7 @@ return (
           rotation={0}
         />
       </div>
-        <h1 className='my-5 Ctitle'>Shopping Cart 🛒</h1>
+        <h1 className='my-5 Ctitle text-light'>Shopping Cart 🛒</h1>
 
         {cartItems.length === 0 ? (
             <p className='text-center'>Your cart is empty.</p>

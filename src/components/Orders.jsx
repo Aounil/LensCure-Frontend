@@ -74,13 +74,13 @@ export default function Orders() {
         <Silk
           speed={5}
           scale={1}
-          color="#ffffff"
+          color="#7B7481"
           noiseIntensity={1.5}
           rotation={0}
         />
       </div>
 
-      <h2 className="mb-4">Your Orders, {user?.name}:</h2>
+      <h2 className="mb-4 text-light">Your Orders, {user?.name}:</h2>
 
       {orders.length === 0 && <p>You have no orders yet.</p>}
 

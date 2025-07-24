@@ -71,7 +71,7 @@ export default function AddProduct() {
                     zIndex: -1,
                 }}
             >
-                <Silk speed={5} scale={1} color="#fefe3a" noiseIntensity={1.5} rotation={0} />
+                <Silk speed={5} scale={1} color="#ffed53" noiseIntensity={1.5} rotation={0} />
             </div>
             <div className="card shadow-lg p-4 w-100" style={{ maxWidth: '600px' }}>
                 <h2 className="mb-4 text-center fw-bold">Add New Product</h2>
@@ -200,7 +200,7 @@ export default function AddProduct() {
                         />
                     </div>
 
-                    <button type="submit" className="btn btn-primary w-100 py-2 fw-semibold">
+                    <button type="submit" className="btn btn-dark w-100 py-2 fw-semibold">
                         Save Product
                     </button>
                 </form>

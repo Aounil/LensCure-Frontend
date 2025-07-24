@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { fetchWithAuth } from '../fetchWithAuth';
 import { toast, Bounce } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Silk from './Silk';
 
 export default function AdminPanel() {
   const [users, setUsers] = useState([]);
@@ -54,11 +55,11 @@ export default function AdminPanel() {
   };
 
   const handleDelet = (id) => {
-  const toastId =   toast.info(
+    const toastId = toast.info(
       <div>
         <p>Are you sure?</p>
-        <button className='btn btn-success' onClick={()=>handleYes(id , toastId)} style={{ marginRight: '8px' }}>Yes</button>
-        <button className='btn btn-danger' onClick={()=>handleNo(toastId)}>No</button>
+        <button className='btn btn-success' onClick={() => handleYes(id, toastId)} style={{ marginRight: '8px' }}>Yes</button>
+        <button className='btn btn-danger' onClick={() => handleNo(toastId)}>No</button>
       </div>,
       {
         autoClose: false,
@@ -68,7 +69,7 @@ export default function AdminPanel() {
   }
 
 
-  const handleYes = async (id , Toastid) => {
+  const handleYes = async (id, Toastid) => {
     try {
       const response = await fetchWithAuth(`http://localhost:8080/admin/delete/${id}`, { method: 'DELETE' })
       if (response.ok) {
@@ -96,7 +97,7 @@ export default function AdminPanel() {
     }
   }
 
-  const handleNo =(id) =>{
+  const handleNo = (id) => {
     toast.dismiss(id)
   }
 
@@ -106,50 +107,70 @@ export default function AdminPanel() {
   }, []);
 
   return (
-    <div className="container my-4">
-      <h2>Admin Panel - Users</h2>
-      <table className="table table-striped table-bordered mt-3">
-        <thead className="table-dark">
-          <tr>
-            <th>ID</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Role</th>
-            <th>Update Role</th>
-            <th>Delete User</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.length === 0 ? (
+    <>
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          width: '100%',
+          height: '100%',
+          zIndex: -1,
+        }}
+      >
+        <Silk
+          speed={5}
+          scale={1}
+          color="#7B7481"
+          noiseIntensity={1.5}
+          rotation={0}
+        />
+      </div>
+      <div className="container my-4">
+        <h2 className='text-light'>Admin Panel - Users</h2>
+        <table className="table table-striped table-bordered mt-3">
+          <thead className="table-dark">
             <tr>
-              <td colSpan="5" className="text-center">
-                No users found
-              </td>
+              <th>ID</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Role</th>
+              <th>Update Role</th>
+              <th>Delete User</th>
             </tr>
-          ) : (
-            users.map((user) => (
-              <tr key={user.id}>
-                <td>{user.id}</td>
-                <td>{user.name || user.username || '—'}</td>
-                <td>{user.email}</td>
-                <td>{user.role}</td>
-                <td>
-                  <select
-                    value={user.role}
-                    onChange={(e) => updateRole(user.id, e.target.value)}
-                    className="form-select"
-                  >
-                    <option value="CLIENT">CLIENT</option>
-                    <option value="ADMIN">ADMIN</option>
-                    <option value="GESTIONNAIRE_ACHAT">GESTIONNAIRE_ACHAT</option>
-                  </select>
+          </thead>
+          <tbody>
+            {users.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="text-center">
+                  No users found
                 </td>
-                <td><button className='btn btn-danger w-100' onClick={() => handleDelet(user.id)}>X</button></td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-    </div>
+            ) : (
+              users.map((user) => (
+                <tr key={user.id}>
+                  <td>{user.id}</td>
+                  <td>{user.name || user.username || '—'}</td>
+                  <td>{user.email}</td>
+                  <td>{user.role}</td>
+                  <td>
+                    <select
+                      value={user.role}
+                      onChange={(e) => updateRole(user.id, e.target.value)}
+                      className="form-select"
+                    >
+                      <option value="CLIENT">CLIENT</option>
+                      <option value="ADMIN">ADMIN</option>
+                      <option value="GESTIONNAIRE_ACHAT">GESTIONNAIRE_ACHAT</option>
+                    </select>
+                  </td>
+                  <td><button className='btn btn-danger w-100' onClick={() => handleDelet(user.id)}>X</button></td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
+    </>
   );
 }
