@@ -5,10 +5,10 @@ import Silk from './Silk';
 
 export default function StockManager() {
   const [products, setProducts] = useState([]);
-  const [drafts, setDrafts] = useState({});
-  const [savingIds, setSavingIds] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState(null);
+  const [draft, setDraft] = useState({});
+  const [saving, setSaving] = useState(false);
 
-  // Fetch products
   const getProducts = async () => {
     try {
       const response = await fetchWithAuth('http://localhost:8080/all', { method: 'GET' });
@@ -23,44 +23,28 @@ export default function StockManager() {
     getProducts();
   }, []);
 
-  // Handle field change
-  const handleChange = (id, field, value) => {
-    setDrafts(prev => ({
-      ...prev,
-      [id]: {
-        ...prev[id],
-        [field]: value,
-      },
-    }));
+  const handleSelect = (product) => {
+    setSelectedProduct(product);
+    setDraft(product);
   };
 
-  // Save a product
-  const handleSave = async (product) => {
-    const draft = drafts[product.id];
-    if (!draft) return; // Nothing to save
+  // to save the changes temp in draft product befor saving is better ig
+  const handleChange = (field, value) => {
+    setDraft(prev => ({ ...prev, [field]: value }));
+  };
 
-    const updatedProduct = { ...product, ...draft };
-
-    setSavingIds(prev => [...prev, product.id]);
-
+  const handleSave = async () => {
+    if (!draft || !selectedProduct) return;
+    setSaving(true);
     try {
-      const response = await fetchWithAuth(`http://localhost:8080/stock/update/${product.id}`, {
+      const response = await fetchWithAuth(`http://localhost:8080/stock/update/${draft.id}`, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(updatedProduct),
+        body: JSON.stringify(draft),
       });
 
       if (response.ok) {
-        // Apply changes to main state
-        setProducts(prev =>
-          prev.map(p => (p.id === product.id ? updatedProduct : p))
-        );
-        // Clear draft for this product
-        setDrafts(prev => {
-          const copy = { ...prev };
-          delete copy[product.id];
-          return copy;
-        });
+        setProducts(prev => prev.map(p => (p.id === draft.id ? draft : p)));
         console.log('✅ Product saved successfully!');
       } else {
         console.error('❌ Failed to save product.');
@@ -68,128 +52,121 @@ export default function StockManager() {
     } catch (error) {
       console.error('Error saving product:', error);
     } finally {
-      setSavingIds(prev => prev.filter(id => id !== product.id));
+      setSaving(false);
     }
   };
 
   return (
-    <div className="container mt-5">
-      <div
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          zIndex: -1,
-        }}
-      >
-        <Silk speed={5} scale={1} color="#ffffff" noiseIntensity={1.5} rotation={0} />
+    <div className="container my-5">
+      <div style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }}>
+        <Silk speed={5} scale={1} color="#8a8a8a" noiseIntensity={1.5} rotation={0} />
       </div>
 
-      <h2 className="my-5 text-light">Manage Product Inventory</h2>
+      <h2 className="my-4 text-light fw-bold titles">Manage Product Inventory</h2>
 
-      <table className="table table-responsive table-bordered table-striped rounded">
-        <thead className="thead-dark">
-          <tr>
-            <th>Name</th>
-            <th>Price</th>
-            <th>Description</th>
-            <th>Quantity</th>
-            <th>Status</th>
-            <th>Reference</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-
-        <tbody>
-          {products.map(product => {
-            const draft = drafts[product.id] || {};
-            const combined = { ...product, ...draft };
-            const isSaving = savingIds.includes(product.id);
-
-            return (
-              <tr key={product.id}>
-                <td>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={combined.name}
-                    onChange={e => handleChange(product.id, 'name', e.target.value)}
-                  />
-                </td>
-
-                <td>
-                  <input
-                    type="number"
-                    className="form-control"
-                    value={combined.price}
-                    onChange={e =>
-                      handleChange(product.id, 'price', parseFloat(e.target.value))
-                    }
-                  />
-                </td>
-
-                <td>
-                  <textarea
-                    className="form-control"
-                    value={combined.description || ''}
-                    onChange={e =>
-                      handleChange(product.id, 'description', e.target.value)
-                    }
-                  />
-                </td>
-
-                <td>
-                  <input
-                    type="number"
-                    className="form-control"
-                    value={combined.quantity}
-                    onChange={e =>
-                      handleChange(product.id, 'quantity', parseInt(e.target.value))
-                    }
-                  />
-                </td>
-
-                <td>
-                  <select
-                    className="form-select"
-                    value={combined.status}
-                    onChange={e =>
-                      handleChange(product.id, 'status', e.target.value)
-                    }
+      <div className="row g-4">
+        <div className="col-md-4">
+          <div className="bg-white rounded-4 shadow p-3">
+            <h5 className="mb-3">Products</h5>
+            <table className="table table-hover">
+              <tbody>
+                {products.map(product => (
+                  <tr
+                    key={product.id}
+                    onClick={() => handleSelect(product)}
+                    style={{
+                      cursor: 'pointer',
+                      backgroundColor: selectedProduct?.id === product.id ? '#f0f0f0' : 'transparent',
+                      borderRadius: '12px'
+                    }}
                   >
-                    <option value="AVAILABLE">Available</option>
-                    <option value="OUT OF STOCK">Out of Stock</option>
-                  </select>
-                </td>
+                    <td>{product.name}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-                <td>
-                  <input
-                    type="text"
-                    className="form-control"
-                    value={combined.reference}
-                    onChange={e =>
-                      handleChange(product.id, 'reference', e.target.value)
-                    }
-                  />
-                </td>
+        <div className="col-md-8">
+          {selectedProduct ? (
+            <div className="bg-white rounded-4 shadow p-4">
+              <h5 className="mb-4">Edit Product</h5>
 
-                <td>
-                  <button
-                    className="btn btn-success"
-                    disabled={!draft || isSaving}
-                    onClick={() => handleSave(product)}
-                  >
-                    {isSaving ? 'Saving...' : 'Save'}
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+              <div className="mb-3">
+                <label className="form-label">Name</label>
+                <input
+                  type="text"
+                  className="form-control rounded-3"
+                  value={draft.name}
+                  onChange={e => handleChange('name', e.target.value)}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Price</label>
+                <input
+                  type="number"
+                  className="form-control rounded-3"
+                  value={draft.price}
+                  onChange={e => handleChange('price', parseFloat(e.target.value))}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Description</label>
+                <textarea
+                  className="form-control rounded-3"
+                  value={draft.description || ''}
+                  onChange={e => handleChange('description', e.target.value)}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Quantity</label>
+                <input
+                  type="number"
+                  className="form-control rounded-3"
+                  value={draft.quantity}
+                  onChange={e => handleChange('quantity', parseInt(e.target.value))}
+                />
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Status</label>
+                <select
+                  className="form-select rounded-3"
+                  value={draft.status}
+                  onChange={e => handleChange('status', e.target.value)}
+                >
+                  <option value="AVAILABLE">Available</option>
+                  <option value="OUT OF STOCK">Out of Stock</option>
+                </select>
+              </div>
+
+              <div className="mb-3">
+                <label className="form-label">Reference</label>
+                <input
+                  type="text"
+                  className="form-control rounded-3"
+                  value={draft.reference}
+                  onChange={e => handleChange('reference', e.target.value)}
+                />
+              </div>
+
+              <button
+                className="btn btn-primary rounded-pill px-4"
+                disabled={saving}
+                onClick={handleSave}
+              >
+                {saving ? 'Saving...' : 'Save'}
+              </button>
+            </div>
+          ) : (
+            <p className="text-light">Select a product to edit</p>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
-  
