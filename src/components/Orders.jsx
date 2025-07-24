@@ -74,7 +74,7 @@ export default function Orders() {
         <Silk
           speed={5}
           scale={1}
-          color="#7B7481"
+          color="#ffffff"
           noiseIntensity={1.5}
           rotation={0}
         />

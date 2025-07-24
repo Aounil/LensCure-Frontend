@@ -68,7 +68,7 @@ function App() {
         height: "100%",
         zIndex: -1
       }}>
-        <Silk speed={5} scale={1} color="#7B7481" noiseIntensity={1.5} rotation={0} />
+        <Silk speed={5} scale={1} color="#ffffff" noiseIntensity={1.5} rotation={0} />
       </div>
 
       {/* ✅ Your login content stays above */}

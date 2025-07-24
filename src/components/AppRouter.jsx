@@ -9,6 +9,7 @@ import CheckOut from "./CheckOut";
 import Product from "./Product";
 import UserCreation from "./UserCreation";
 import Orders from "./Orders";
+import AddProduct from "./AddProduct";
 
 export default function AppRouter() {
   return (
@@ -22,6 +23,7 @@ export default function AppRouter() {
       <Route path="/product" element={<Product/>}/>
       <Route path="/user-creation" element={<UserCreation/>}/>
       <Route path="/orders" element={<Orders/>}/>
+      <Route path="/addproduct" element={<AddProduct/>}/>
     </Routes>
   );
 }

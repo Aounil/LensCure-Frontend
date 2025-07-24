@@ -139,6 +139,19 @@ export default function Navbar() {
                                     <li className="nav-item">
                                         <Link className="nav-link navig_link" to="/user-creation">User Creation</Link>
                                     </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link navig_link" to="/addproduct">Add Product</Link>
+                                    </li>
+                                </>
+                            )}
+                            {user?.role === "GESTIONNAIRE_ACHAT" && (
+                                <>
+                                    <li className="nav-item">
+                                        <Link className="nav-link navig_link" to="/stock-manager">Stock Management</Link>
+                                    </li>
+                                    <li className="nav-item">
+                                        <Link className="nav-link navig_link" to="/addproduct">Add Product</Link>
+                                    </li>
                                 </>
                             )}
                         </ul>

@@ -14,6 +14,7 @@ void main() {
 }
 `;
 
+// Updated fragment shader with uColor uniform and usage
 const fragmentShader = `
 varying vec2 vUv;
 varying vec3 vPosition;
@@ -23,6 +24,7 @@ uniform float uSpeed;
 uniform float uScale;
 uniform float uRotation;
 uniform float uNoiseIntensity;
+uniform vec3 uColor; // NEW uniform for color
 
 const float PI = 3.141592653589793;
 
@@ -51,12 +53,13 @@ void main() {
                                    0.02 * tOffset) +
                            sin(20.0 * (tex.x + tex.y - 0.1 * tOffset)));
 
-  // Grayscale colors: base white with dynamic darkening for silk folds
-  float base = 0.95; // almost white base
   float shade = pattern * 0.5 + 0.25; // varying gray shades
 
-  float finalShade = mix(base, shade, 1.0 - rnd * uNoiseIntensity);
-  gl_FragColor = vec4(vec3(finalShade), 1.0);
+  float finalShade = mix(1.0, shade, 1.0 - rnd * uNoiseIntensity);
+
+  vec3 color = uColor * finalShade; // tint pattern with uColor
+
+  gl_FragColor = vec4(color, 1.0);
 }
 `;
 
@@ -91,6 +94,7 @@ const Silk = ({
   scale = 1.3,
   noiseIntensity = 0.6,
   rotation = 0.1,
+  color = "#ffffff", // NEW prop for color with default white
 }) => {
   const meshRef = useRef();
 
@@ -101,8 +105,9 @@ const Silk = ({
       uNoiseIntensity: { value: noiseIntensity },
       uRotation: { value: rotation },
       uTime: { value: 0 },
+      uColor: { value: new Color(color) }, 
     }),
-    [speed, scale, noiseIntensity, rotation]
+    [speed, scale, noiseIntensity, rotation, color] 
   );
 
   return (
